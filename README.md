@@ -12,8 +12,8 @@ Desarrollar un robot móvil tipo diferencial para implementación de algoritmos 
 
 ## Descripción:  
 
-El robot debe poder funcionar en dos modos MANUAL y AUTOMÁTICO en donde el primero consiste en un robot que sigue las velocidades lineales [$v(t)$, $w(t)$] las cuales serán suministradas mediante XXXX a través de un computadora conectada a un Joystick.
-El modo AUTOMÁTICO será comandado también por velocidades [$v(t)$, $w(t)$] pero de forma automática a través de la conexión XXXXX  a la computadora (debido al peso de estos algoritmos).
+El robot debe poder funcionar en dos modos MANUAL y AUTOMÁTICO en donde el primero consiste en un robot que sigue las velocidades lineales [ $v(t)$ , $w(t)$ ] las cuales serán suministradas mediante XXXX a través de un computadora conectada a un Joystick.
+El modo AUTOMÁTICO será comandado también por velocidades [ $v(t)$ , $w(t)$ ] pero de forma automática a través de la conexión XXXXX  a la computadora (debido al peso de estos algoritmos).
 
 El robot contará con una conexión a una cámara para visión (Cámara  monocular tipo Raspberry o Sensor Kinect) el mismo se usará para detectar a las personas y transmitir mediante I2C hacia la placa (la NUCLEO-F429ZI admite también DCMI).
 
@@ -21,9 +21,9 @@ Para esta primera etapa todos los sensores serán simulados mediante entradas di
 
 Para la identificación de una persona  (MODO AUTOMÁTICO) se mandaran coordenadas en el espacio de la imagen (ej Size: 32x32 - > pose_yz: (14,20) ) mediante UART.
 
-Para la enviar señales (MODO MANUAL) de velocidad lineal ( $v(t)$ ) y velocidad angular ( #w(t)# ) se enviaran al micro. mediante UART.
+Para la enviar señales (MODO MANUAL) de velocidad lineal ( $v(t)$ ) y velocidad angular ( $w(t)$ ) se enviaran al micro. mediante UART.
 
-Para simular los motores se utilizarán dos LEDs  el cual encendieran y apagaran proporcionalmente a la velocidad necesaria para cada ruda ($w(t)_L$, $w(t)_R$ $\in$ [$W_min$, $W_max$])
+Para simular los motores se utilizarán dos LEDs  el cual encendieran y apagaran proporcionalmente a la velocidad necesaria para cada ruda ($w(t)_L$, $w(t)_R$ $\in$ [$ W_min$ , $W_max$] )
 
 Ademas se implementará un boton digital de parada de emergencia.
 
