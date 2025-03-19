@@ -23,18 +23,18 @@ Para la identificación de una persona  (MODO AUTOMÁTICO) se mandaran coordenad
 
 Para la enviar señales (MODO MANUAL) de velocidad lineal ( $v(t)$ ) y velocidad angular ( $w(t)$ ) se enviaran al micro. mediante UART.
 
-Para simular los motores se utilizarán dos LEDs  el cual encendieran y apagaran proporcionalmente a la velocidad necesaria para cada ruda ( $w(t)_L$, $w(t)_R$ $\in$ [$ W_{min}$ , $W_{max}$] )
+Para simular los motores se utilizarán dos LEDs  el cual encendieran y apagaran proporcionalmente a la velocidad necesaria para cada ruda ( $w(t)_L$, $w(t)_R$ $\in$ [$W_{min}$ , $W_{max}$] )
 
 Ademas se implementará un boton digital de parada de emergencia.
 
 ## Periféricos a utilizar:
 
-**BUTTOM_STOP** : Entrada digital, fuerza la detención del robot llevándolo a un estado seguro.
-**M1** : Salida digital LED1 que emula un motor controlado por PWM.
-**M2** :  Salida digital LED2 que emula un motor controlado por PWM.
-**ENCODER_1** : Entrada digital, simula un encoder tomando las pulsaciones del LED1. 
-**ENCODER_1** : Entrada digital, simula un encoder tomando las pulsaciones del LED2. 
-**UART**:  Se utiliza para enviar datos de referencia o control al microprocesador.
+* **BUTTOM_STOP** : Entrada digital, fuerza la detención del robot llevándolo a un estado seguro.
+* **M1** : Salida digital LED1 que emula un motor controlado por PWM.
+* **M2** :  Salida digital LED2 que emula un motor controlado por PWM.
+* **ENCODER_1** : Entrada digital, simula un encoder tomando las pulsaciones del LED1. 
+* **ENCODER_1** : Entrada digital, simula un encoder tomando las pulsaciones del LED2. 
+* **UART**:  Se utiliza para enviar datos de referencia o control al microprocesador.
 
 ## Plataforma de desarrollo: NUCLEO-F429ZI
 
