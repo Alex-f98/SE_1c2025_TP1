@@ -23,7 +23,7 @@ Para la identificación de una persona  (MODO AUTOMÁTICO) se mandaran coordenad
 
 Para la enviar señales (MODO MANUAL) de velocidad lineal ( $v(t)$ ) y velocidad angular ( $w(t)$ ) se enviaran al micro. mediante UART.
 
-Para simular los motores se utilizarán dos LEDs  el cual encendieran y apagaran proporcionalmente a la velocidad necesaria para cada ruda ( $w(t)_L$, $w(t)_R$ $\in$ [$W_{min}$ , $W_{max}$] )
+Para simular los motores se utilizarán dos LEDs, los cuales se encenderán y apagarán proporcionalmente a la velocidad necesaria para cada rueda ($w_L(t)$, $w_R(t)$ $\in [W_{min}, W_{max}]$).
 
 Ademas se implementará un boton digital de parada de emergencia.
 
