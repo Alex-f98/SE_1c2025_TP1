@@ -1,0 +1,24 @@
+<map id="_min" name="_min">
+<area shape="rect" id="Node000001" title="Calcula el mínimo entre dos valores." alt="" coords="834,69,883,96"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#a650781ea495fccb6f664ac3cabe19a6e" title="Control de motores en lazo abierto." alt="" coords="426,63,609,89"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="819,85,609,80,609,75,819,79"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#a5452242a13043c5415efbbca818fa1b5" title="Modo de operación manual." alt="" coords="110,5,206,32"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="819,72,785,64,619,41,455,28,311,22,206,21,206,16,311,17,455,23,620,36,787,59,821,67"/>
+<area shape="rect" id="Node000007" href="$class_p_i_d.html#a33c351995ba9e6faf080627680241276" title="Calcula la acción de control del PID." alt="" coords="672,95,772,121"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="820,92,773,101,772,96,819,87"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html#a71dbe7a175c86756090ae8a8ffd935b1" title="Control PWM de los motores." alt="" coords="658,145,786,172"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="830,107,787,136,763,147,761,142,785,131,827,103"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#a0be72733352ddc0e09b4ce86c3c8e870" title="Aplica velocidades a los motores." alt="" coords="261,63,377,89"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="411,79,378,79,378,73,411,73"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#a6dabb1eb070d4c8cffd84a0ba8097fc9" title="Modo de operación automática." alt="" coords="103,56,213,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="246,76,213,74,213,69,246,70"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Función principal del programa." alt="" coords="5,56,55,83"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="246,94,177,101,139,101,102,97,54,83,56,78,103,92,139,96,176,96,246,89"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="265,60,197,35,199,30,267,55"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="88,72,55,72,55,67,88,67"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="109,41,56,62,54,57,107,36"/>
+<area shape="poly" id="edge13_Node000008_Node000002" title=" " alt="" coords="670,142,657,136,609,110,561,92,563,87,611,106,659,131,672,137"/>
+<area shape="rect" id="Node000009" href="$main_8cpp.html#ace55190c1a614e7c2224ddd6b05a722d" title="Control de motores en lazo cerrado." alt="" coords="425,120,610,147"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="643,152,610,147,611,142,643,146"/>
+<area shape="poly" id="edge12_Node000009_Node000003" title=" " alt="" coords="454,118,367,93,369,87,456,113"/>
+</map>

@@ -1,0 +1,32 @@
+<map id="automaticMode" name="automaticMode">
+<area shape="rect" id="Node000001" title="Modo de operación automática." alt="" coords="5,81,116,108"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#afd851305cd92310c8b2799c1c5d5c129" title="Calcula velocidades de las ruedas a partir de v y w." alt="" coords="164,56,316,83"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,84,148,80,149,85,117,89"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#a0be72733352ddc0e09b4ce86c3c8e870" title="Aplica velocidades a los motores." alt="" coords="182,107,298,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="117,100,168,107,167,112,116,105"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#ace55190c1a614e7c2224ddd6b05a722d" title="Control de motores en lazo cerrado." alt="" coords="364,132,548,159"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="299,124,350,130,349,135,298,129"/>
+<area shape="rect" id="Node000013" href="$main_8cpp.html#a650781ea495fccb6f664ac3cabe19a6e" title="Control de motores en lazo abierto." alt="" coords="365,81,547,108"/>
+<area shape="poly" id="edge12_Node000003_Node000013" title=" " alt="" coords="298,111,350,104,350,110,299,116"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#a71dbe7a175c86756090ae8a8ffd935b1" title="Control PWM de los motores." alt="" coords="596,132,725,159"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="549,143,581,143,581,148,549,148"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html#a840d3846910eee5c8c88f1ffb0782843" title="Salidas digitales para control de motores." alt="" coords="623,183,698,209"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="514,157,609,181,608,186,512,162"/>
+<area shape="rect" id="Node000009" href="$main_8cpp.html#a9e2c6c5e35f01cc8e94f961f850d9355" title="Control del motor derecho." alt="" coords="618,81,703,108"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="512,129,603,106,604,111,514,134"/>
+<area shape="rect" id="Node000010" href="$main_8cpp.html#abe3cadd48fff6e4ace8d1306bbda3d40" title="Lee los encoders y calcula velocidades." alt="" coords="610,233,711,260"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="482,157,598,219,611,225,608,230,595,224,479,161"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#a97f0625d90c3934f680b377575482d95" title="Calcula el máximo entre dos valores." alt="" coords="795,5,848,32"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="702,129,723,118,795,41,799,45,726,122,705,134"/>
+<area shape="rect" id="Node000007" href="$main_8cpp.html#aa79a08e631aff494c952637eeb40ce09" title="Calcula el mínimo entre dos valores." alt="" coords="797,81,846,108"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="705,129,782,104,783,109,706,134"/>
+<area shape="rect" id="Node000011" href="$main_8cpp.html#ad76001043e624039477b78f58588687d" title="Encoder de la rueda izquierda." alt="" coords="777,208,866,235"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="711,236,762,228,763,233,712,241"/>
+<area shape="rect" id="Node000012" href="$main_8cpp.html#abfe8fe56dd7ab950f8ff1dc86b13bc9d" title="Encoder de la rueda derecha." alt="" coords="773,259,870,285"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="712,252,758,259,757,265,711,257"/>
+<area shape="poly" id="edge15_Node000013_Node000005" title=" " alt="" coords="514,106,590,125,589,130,512,111"/>
+<area shape="poly" id="edge13_Node000013_Node000006" title=" " alt="" coords="493,78,596,47,695,29,780,19,780,25,696,34,597,52,495,83"/>
+<area shape="poly" id="edge14_Node000013_Node000007" title=" " alt="" coords="520,78,596,67,661,62,725,67,783,80,782,85,724,72,661,67,597,72,521,83"/>
+<area shape="poly" id="edge16_Node000013_Node000008" title=" " alt="" coords="525,106,550,118,565,130,575,143,584,156,598,169,611,176,608,181,595,173,580,159,571,146,562,134,547,122,523,111"/>
+<area shape="poly" id="edge17_Node000013_Node000009" title=" " alt="" coords="548,92,603,92,603,97,548,97"/>
+</map>

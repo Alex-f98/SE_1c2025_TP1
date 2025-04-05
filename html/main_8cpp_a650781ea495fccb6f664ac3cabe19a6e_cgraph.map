@@ -1,0 +1,15 @@
+<map id="_setMotorSpeedsOpenLoop" name="_setMotorSpeedsOpenLoop">
+<area shape="rect" id="Node000001" title="Control de motores en lazo abierto." alt="" coords="5,81,188,108"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#a97f0625d90c3934f680b377575482d95" title="Calcula el máximo entre dos valores." alt="" coords="412,5,465,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,79,166,45,200,28,235,16,278,9,321,6,397,10,397,15,321,11,278,14,236,21,202,33,169,50,117,83"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#aa79a08e631aff494c952637eeb40ce09" title="Calcula el mínimo entre dos valores." alt="" coords="414,56,463,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,85,399,70,399,75,188,91"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#a71dbe7a175c86756090ae8a8ffd935b1" title="Control PWM de los motores." alt="" coords="236,31,364,57"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="153,78,229,59,230,64,154,83"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#a840d3846910eee5c8c88f1ffb0782843" title="Salidas digitales para control de motores." alt="" coords="262,132,338,159"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="154,106,248,130,247,135,153,111"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#a9e2c6c5e35f01cc8e94f961f850d9355" title="Control del motor derecho." alt="" coords="258,183,342,209"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="122,106,237,168,250,174,248,179,234,173,120,111"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="364,30,397,23,398,29,365,35"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="365,53,400,60,399,65,364,58"/>
+</map>

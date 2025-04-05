@@ -1,0 +1,9 @@
+<map id="inputsInit" name="inputsInit">
+<area shape="rect" id="Node000001" title="Inicialización de entradas digitales." alt="" coords="5,56,79,83"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#abc6326890e26f7d2868d215f4fade685" title="Entradas digitales para sensores y botones." alt="" coords="133,5,218,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,53,124,35,126,40,80,58"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#ad76001043e624039477b78f58588687d" title="Encoder de la rueda izquierda." alt="" coords="131,56,220,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="79,67,116,67,116,72,79,72"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#abfe8fe56dd7ab950f8ff1dc86b13bc9d" title="Encoder de la rueda derecha." alt="" coords="127,107,224,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="80,81,126,98,124,103,78,86"/>
+</map>

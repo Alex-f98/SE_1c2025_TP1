@@ -1,0 +1,7 @@
+<map id="availableCommands" name="availableCommands">
+<area shape="rect" id="Node000001" title="Lista de comandos disponibles para el usuario." alt="" coords="5,5,142,32"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#a40634c42d0e0e3b0d584421333187360" title="Envia mensajes por UART." alt="" coords="190,5,267,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="142,16,175,16,175,21,142,21"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#ad49ff21a38bf59699b141283d67444d2" title="Comunicación serie con la PC." alt="" coords="315,5,381,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="267,16,300,16,300,21,267,21"/>
+</map>

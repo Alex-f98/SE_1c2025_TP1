@@ -1,0 +1,19 @@
+<map id="_setMotorSpeedsCloseLoop" name="_setMotorSpeedsCloseLoop">
+<area shape="rect" id="Node000001" title="Control de motores en lazo cerrado." alt="" coords="5,107,190,133"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#a71dbe7a175c86756090ae8a8ffd935b1" title="Control PWM de los motores." alt="" coords="238,31,366,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,104,249,61,251,66,137,109"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#a840d3846910eee5c8c88f1ffb0782843" title="Salidas digitales para control de motores." alt="" coords="264,81,340,108"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="190,106,249,98,250,104,191,111"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#a9e2c6c5e35f01cc8e94f961f850d9355" title="Control del motor derecho." alt="" coords="260,132,344,159"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="191,129,245,136,245,141,190,134"/>
+<area shape="rect" id="Node000007" href="$main_8cpp.html#abe3cadd48fff6e4ace8d1306bbda3d40" title="Lee los encoders y calcula velocidades." alt="" coords="251,183,353,209"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="137,131,251,174,249,179,135,136"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#a97f0625d90c3934f680b377575482d95" title="Calcula el máximo entre dos valores." alt="" coords="436,5,489,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="366,31,421,22,422,28,367,36"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#aa79a08e631aff494c952637eeb40ce09" title="Calcula el mínimo entre dos valores." alt="" coords="438,56,487,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="367,52,423,61,423,66,366,57"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html#ad76001043e624039477b78f58588687d" title="Encoder de la rueda izquierda." alt="" coords="419,157,507,184"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="352,185,404,177,404,182,353,191"/>
+<area shape="rect" id="Node000009" href="$main_8cpp.html#abfe8fe56dd7ab950f8ff1dc86b13bc9d" title="Encoder de la rueda derecha." alt="" coords="414,208,511,235"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="353,201,400,209,399,214,352,207"/>
+</map>

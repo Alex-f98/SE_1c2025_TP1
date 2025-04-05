@@ -1,0 +1,10 @@
+<map id="buttonStop" name="buttonStop">
+<area shape="rect" id="Node000001" title="Entradas digitales para sensores y botones." alt="" coords="255,31,339,57"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#a0ab57512733269580d0f138ffb227acc" title="Verifica sensores y botón de emergencia." alt="" coords="103,5,207,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="240,37,207,31,208,25,241,31"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#a5225cb66d91a0766757acd370b60c6f7" title="Inicialización de entradas digitales." alt="" coords="118,56,192,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="241,57,192,65,191,60,240,51"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Función principal del programa." alt="" coords="5,31,55,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,35,55,42,54,37,88,30"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="103,62,55,52,56,46,104,56"/>
+</map>

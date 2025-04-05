@@ -1,0 +1,5 @@
+<map id="_printUart" name="_printUart">
+<area shape="rect" id="Node000001" title="Envia mensajes por UART." alt="" coords="5,5,83,32"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#ad49ff21a38bf59699b141283d67444d2" title="Comunicación serie con la PC." alt="" coords="131,5,197,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,16,116,16,116,21,83,21"/>
+</map>
