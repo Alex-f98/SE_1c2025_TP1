@@ -1,0 +1,122 @@
+\doxysection{PID Class Reference}
+\hypertarget{class_p_i_d}{}\label{class_p_i_d}\index{PID@{PID}}
+
+
+Implementación de un controlador \doxylink{class_p_i_d}{PID} básico.  
+
+
+
+
+Collaboration diagram for PID\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=161pt]{class_p_i_d__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_p_i_d_a6980952e739f750a4338863018b17ceb}{PID}} (float Kp, float Ki, float Kd, float dt)
+\begin{DoxyCompactList}\small\item\em Constructor del controlador \doxylink{class_p_i_d}{PID}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_p_i_d_aa135feafb13bf79af42086027a4dae4f}{set\+Saturation}} (float min, float max)
+\begin{DoxyCompactList}\small\item\em Establece límites de salida para el \doxylink{class_p_i_d}{PID}. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_p_i_d_a33c351995ba9e6faf080627680241276}{compute}} (float setpoint, float measured\+Value)
+\begin{DoxyCompactList}\small\item\em Calcula la acción de control del \doxylink{class_p_i_d}{PID}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementación de un controlador \doxylink{class_p_i_d}{PID} básico. 
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00066}{66}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_p_i_d_a6980952e739f750a4338863018b17ceb}\index{PID@{PID}!PID@{PID}}
+\index{PID@{PID}!PID@{PID}}
+\doxysubsubsection{\texorpdfstring{PID()}{PID()}}
+{\footnotesize\ttfamily \label{class_p_i_d_a6980952e739f750a4338863018b17ceb} 
+PID\+::\+PID (\begin{DoxyParamCaption}\item[{float}]{Kp}{, }\item[{float}]{Ki}{, }\item[{float}]{Kd}{, }\item[{float}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor del controlador \doxylink{class_p_i_d}{PID}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Kp} & Ganancia proporcional. \\
+\hline
+{\em Ki} & Ganancia integral. \\
+\hline
+{\em Kd} & Ganancia derivativa. \\
+\hline
+{\em dt} & Intervalo de muestreo en segundos. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00082}{82}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_p_i_d_a33c351995ba9e6faf080627680241276}\index{PID@{PID}!compute@{compute}}
+\index{compute@{compute}!PID@{PID}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily \label{class_p_i_d_a33c351995ba9e6faf080627680241276} 
+float PID\+::compute (\begin{DoxyParamCaption}\item[{float}]{setpoint}{, }\item[{float}]{measured\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Calcula la acción de control del \doxylink{class_p_i_d}{PID}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em setpoint} & Valor deseado. \\
+\hline
+{\em measured\+Value} & Valor medido. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Acción de control calculada. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00109}{109}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=231pt]{class_p_i_d_a33c351995ba9e6faf080627680241276_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_p_i_d_aa135feafb13bf79af42086027a4dae4f}\index{PID@{PID}!setSaturation@{setSaturation}}
+\index{setSaturation@{setSaturation}!PID@{PID}}
+\doxysubsubsection{\texorpdfstring{setSaturation()}{setSaturation()}}
+{\footnotesize\ttfamily \label{class_p_i_d_aa135feafb13bf79af42086027a4dae4f} 
+void PID\+::set\+Saturation (\begin{DoxyParamCaption}\item[{float}]{min}{, }\item[{float}]{max}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Establece límites de salida para el \doxylink{class_p_i_d}{PID}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min} & Valor mínimo de salida. \\
+\hline
+{\em max} & Valor máximo de salida. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00097}{97}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{main_8cpp}{main.\+cpp}}\end{DoxyCompactItemize}

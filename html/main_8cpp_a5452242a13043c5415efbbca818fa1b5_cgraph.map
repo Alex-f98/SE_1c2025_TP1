@@ -1,0 +1,42 @@
+<map id="manualMode" name="manualMode">
+<area shape="rect" id="Node000001" title="Modo de operación manual." alt="" coords="5,309,101,336"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#a97f0625d90c3934f680b377575482d95" title="Calcula el máximo entre dos valores." alt="" coords="780,5,833,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,308,87,242,114,202,147,169,185,142,224,119,309,81,398,53,487,34,571,22,649,16,765,14,765,20,649,21,572,28,488,39,399,58,311,86,227,123,187,146,150,173,118,206,92,244,61,310"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#aa79a08e631aff494c952637eeb40ce09" title="Calcula el mínimo entre dos valores." alt="" coords="782,157,831,184"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="101,311,148,304,234,295,308,294,435,297,496,296,559,289,628,273,709,244,749,221,781,192,785,196,752,225,711,249,630,278,560,294,496,301,435,302,308,299,235,301,149,309,102,317"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#a40634c42d0e0e3b0d584421333187360" title="Envia mensajes por UART." alt="" coords="403,360,480,387"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="67,334,102,368,124,384,150,396,180,405,212,409,276,409,337,400,388,388,389,393,338,405,277,414,211,414,179,410,148,401,122,388,98,372,64,338"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#ad49ff21a38bf59699b141283d67444d2" title="Comunicación serie con la PC." alt="" coords="612,360,679,387"/>
+<area shape="poly" id="edge24_Node000001_Node000005" title=" " alt="" coords="101,320,291,324,412,332,534,345,599,358,598,364,533,351,411,337,290,330,101,325"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#a1cd9c02ae085896800c7704dfa969a24" title="Lista de comandos disponibles para el usuario." alt="" coords="157,360,293,387"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="102,334,164,353,162,358,100,339"/>
+<area shape="rect" id="Node000007" href="$main_8cpp.html#afd851305cd92310c8b2799c1c5d5c129" title="Calcula velocidades de las ruedas a partir de v y w." alt="" coords="149,461,301,488"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="64,335,98,386,122,415,150,441,169,452,166,457,147,445,118,418,93,389,60,338"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html#a0be72733352ddc0e09b4ce86c3c8e870" title="Aplica velocidades a los motores." alt="" coords="167,183,283,209"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="71,307,192,216,195,221,74,311"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="480,371,597,371,597,376,480,376"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="293,371,388,371,388,376,293,376"/>
+<area shape="rect" id="Node000009" href="$main_8cpp.html#ace55190c1a614e7c2224ddd6b05a722d" title="Control de motores en lazo cerrado." alt="" coords="349,183,533,209"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="283,193,334,193,334,199,283,199"/>
+<area shape="rect" id="Node000016" href="$main_8cpp.html#a650781ea495fccb6f664ac3cabe19a6e" title="Control de motores en lazo abierto." alt="" coords="350,119,532,145"/>
+<area shape="poly" id="edge18_Node000008_Node000016" title=" " alt="" coords="272,180,378,148,380,153,273,185"/>
+<area shape="rect" id="Node000010" href="$main_8cpp.html#a71dbe7a175c86756090ae8a8ffd935b1" title="Control PWM de los motores." alt="" coords="581,157,710,184"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="534,182,566,178,567,183,534,187"/>
+<area shape="rect" id="Node000011" href="$main_8cpp.html#a840d3846910eee5c8c88f1ffb0782843" title="Salidas digitales para control de motores." alt="" coords="608,107,683,133"/>
+<area shape="poly" id="edge13_Node000009_Node000011" title=" " alt="" coords="479,180,593,136,595,141,480,185"/>
+<area shape="rect" id="Node000012" href="$main_8cpp.html#a9e2c6c5e35f01cc8e94f961f850d9355" title="Control del motor derecho." alt="" coords="603,208,688,235"/>
+<area shape="poly" id="edge14_Node000009_Node000012" title=" " alt="" coords="534,205,589,212,588,217,534,210"/>
+<area shape="rect" id="Node000013" href="$main_8cpp.html#abe3cadd48fff6e4ace8d1306bbda3d40" title="Lee los encoders y calcula velocidades." alt="" coords="595,309,696,336"/>
+<area shape="poly" id="edge15_Node000009_Node000013" title=" " alt="" coords="466,208,612,299,609,304,463,212"/>
+<area shape="poly" id="edge11_Node000010_Node000002" title=" " alt="" coords="689,154,708,143,733,120,755,94,789,44,793,47,760,97,737,124,711,147,692,159"/>
+<area shape="poly" id="edge12_Node000010_Node000003" title=" " alt="" coords="710,168,767,168,767,173,710,173"/>
+<area shape="rect" id="Node000014" href="$main_8cpp.html#ad76001043e624039477b78f58588687d" title="Encoder de la rueda izquierda." alt="" coords="762,284,851,311"/>
+<area shape="poly" id="edge16_Node000013_Node000014" title=" " alt="" coords="696,312,747,304,748,309,697,317"/>
+<area shape="rect" id="Node000015" href="$main_8cpp.html#abfe8fe56dd7ab950f8ff1dc86b13bc9d" title="Encoder de la rueda derecha." alt="" coords="758,335,855,361"/>
+<area shape="poly" id="edge17_Node000013_Node000015" title=" " alt="" coords="697,328,743,335,742,341,696,333"/>
+<area shape="poly" id="edge19_Node000016_Node000002" title=" " alt="" coords="468,116,520,92,580,68,679,41,764,23,765,28,680,46,582,73,522,97,471,121"/>
+<area shape="poly" id="edge20_Node000016_Node000003" title=" " alt="" coords="474,116,521,99,580,86,646,81,679,84,711,92,753,116,786,145,782,149,750,120,709,97,678,89,646,86,581,91,522,104,476,121"/>
+<area shape="poly" id="edge21_Node000016_Node000010" title=" " alt="" coords="516,143,567,153,566,158,515,149"/>
+<area shape="poly" id="edge22_Node000016_Node000011" title=" " alt="" coords="533,124,593,120,593,126,533,129"/>
+<area shape="poly" id="edge23_Node000016_Node000012" title=" " alt="" coords="478,143,534,168,582,194,596,199,593,204,580,198,532,173,476,148"/>
+</map>

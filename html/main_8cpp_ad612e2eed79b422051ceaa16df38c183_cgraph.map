@@ -1,0 +1,7 @@
+<map id="outputsInit" name="outputsInit">
+<area shape="rect" id="Node000001" title="Inicialización de salidas digitales." alt="" coords="5,31,87,57"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#a840d3846910eee5c8c88f1ffb0782843" title="Salidas digitales para control de motores." alt="" coords="139,5,215,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,34,124,26,125,31,88,39"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#a9e2c6c5e35f01cc8e94f961f850d9355" title="Control del motor derecho." alt="" coords="135,56,219,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="88,49,121,56,120,61,87,54"/>
+</map>

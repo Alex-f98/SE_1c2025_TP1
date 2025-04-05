@@ -1,0 +1,21 @@
+<map id="motorLeft" name="motorLeft">
+<area shape="rect" id="Node000001" title="Salidas digitales para control de motores." alt="" coords="658,107,733,133"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#ace55190c1a614e7c2224ddd6b05a722d" title="Control de motores en lazo cerrado." alt="" coords="425,56,610,83"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="642,107,609,97,569,86,570,81,610,92,644,102"/>
+<area shape="rect" id="Node000007" href="$main_8cpp.html#a650781ea495fccb6f664ac3cabe19a6e" title="Control de motores en lazo abierto." alt="" coords="426,107,609,133"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="643,123,609,123,609,117,643,117"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html#ad612e2eed79b422051ceaa16df38c183" title="Inicialización de salidas digitales." alt="" coords="279,157,360,184"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="644,140,610,148,542,159,473,166,360,172,360,167,473,161,541,153,609,143,642,135"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#a0be72733352ddc0e09b4ce86c3c8e870" title="Aplica velocidades a los motores." alt="" coords="261,56,377,83"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="411,72,378,72,378,67,411,67"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#a6dabb1eb070d4c8cffd84a0ba8097fc9" title="Modo de operación automática." alt="" coords="103,5,213,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="260,54,202,35,204,30,261,49"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Función principal del programa." alt="" coords="5,81,55,108"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="246,78,55,95,55,90,246,73"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#a5452242a13043c5415efbbca818fa1b5" title="Modo de operación manual." alt="" coords="110,107,206,133"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="261,90,204,109,202,104,260,85"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="122,42,104,53,55,83,52,78,101,48,119,38"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="95,110,54,102,56,97,96,105"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="448,105,374,86,375,81,449,100"/>
+<area shape="poly" id="edge11_Node000008_Node000005" title=" " alt="" coords="263,174,186,168,143,160,102,148,70,130,44,110,48,106,73,126,104,143,144,155,186,163,264,169"/>
+</map>

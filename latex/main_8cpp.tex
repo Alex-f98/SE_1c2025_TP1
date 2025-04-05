@@ -1,0 +1,1103 @@
+\doxysection{main.\+cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{main.cpp@{main.cpp}}
+
+
+Código principal del robot móvil diferencial.  
+
+
+{\ttfamily \#include "{}mbed.\+h"{}}\newline
+{\ttfamily \#include "{}arm\+\_\+book\+\_\+lib.\+h"{}}\newline
+{\ttfamily \#include "{}string.\+h"{}}\newline
+Include dependency graph for main.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_p_i_d}{PID}}
+\begin{DoxyCompactList}\small\item\em Implementación de un controlador \doxylink{class_p_i_d}{PID} básico. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8cpp_a0f4637d3c9a2605683f0f6c1ba0b267e}{MANUAL\+\_\+\+MODE}}~0
+\begin{DoxyCompactList}\small\item\em Definición de los modos de operación. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a1f0a4d9ea240cd6d883e41a8a99039af}{AUTOMATIC\+\_\+\+MODE}}~1
+\begin{DoxyCompactList}\small\item\em Modo automático. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_abdf34f743a79df4a5405494a5a5ac545}{V\+\_\+\+MAX}}~1.\+0f
+\begin{DoxyCompactList}\small\item\em Límites y pasos de velocidad. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a68c709cd29517003a9730f640e9fc39a}{W\+\_\+\+MAX}}~1.\+0f
+\begin{DoxyCompactList}\small\item\em Velocidad máxima angular (rad/s) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_ad4ba3ca39f09ceaf48279c5c37a6a86b}{V\+\_\+\+MIN}}~0.\+0f
+\begin{DoxyCompactList}\small\item\em Velocidad mínima lineal (m/s) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a54f2a1c630a65e44e81b95a44f3ab42a}{W\+\_\+\+MIN}}~0.\+0f
+\begin{DoxyCompactList}\small\item\em Velocidad mínima angular (rad/s) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a2b0b6e6ba96d86a80185af3440a3d2ed}{V\+\_\+\+STEP}}~0.\+1f
+\begin{DoxyCompactList}\small\item\em Incremento de velocidad lineal (m/s) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_aeaf317694069a27cbace873571f9d626}{W\+\_\+\+STEP}}~0.\+1f
+\begin{DoxyCompactList}\small\item\em Incremento de velocidad angular (rad/s) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_aeec35d5fa40cda2b874fd262a1268b5e}{WHEEL\+\_\+\+DISTANCE}}~0.\+07f
+\begin{DoxyCompactList}\small\item\em Parámetros físicos del robot. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a5419e057d3cc43cca2f87bff5b09cb47}{WHEEL\+\_\+\+DIAMETER}}~0.\+069f
+\begin{DoxyCompactList}\small\item\em Diámetro de la rueda (m) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_af1ebcdfdb36b835d08d6295b5990065d}{TIME\+\_\+\+INCREMENT\+\_\+\+MS}}~10
+\begin{DoxyCompactList}\small\item\em Configuración del control de tiempo. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_aacaca0988244bd3a888ca5befa89f44b}{PWM\+\_\+\+PERIOD}}~0.\+1
+\begin{DoxyCompactList}\small\item\em Período total del "{}\+PWM"{} en segundos. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a83f28fd780254a0181b3d40cdaa96b67}{PWM\+\_\+\+STEP}}~0.\+01
+\begin{DoxyCompactList}\small\item\em Paso de tiempo en cada iteración. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a56a1867ee143bfe79f9f68051d5e6f91}{DUTY\+\_\+\+MIN}}~0.\+0f
+\begin{DoxyCompactList}\small\item\em Límites de ciclo de trabajo del PWM. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a0fd8ccea4c0d3fee95da045da247aed6}{DUTY\+\_\+\+MAX}}~1.\+0f
+\begin{DoxyCompactList}\small\item\em Ciclo de trabajo máximo. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Digital\+In \mbox{\hyperlink{main_8cpp_abc6326890e26f7d2868d215f4fade685}{button\+Stop}} (BUTTON1)
+\begin{DoxyCompactList}\small\item\em Entradas digitales para sensores y botones. \end{DoxyCompactList}\item 
+\Hypertarget{main_8cpp_ad76001043e624039477b78f58588687d}\label{main_8cpp_ad76001043e624039477b78f58588687d} 
+Digital\+In {\bfseries encoder\+Left} (D0)
+\begin{DoxyCompactList}\small\item\em Encoder de la rueda izquierda. \end{DoxyCompactList}\item 
+\Hypertarget{main_8cpp_abfe8fe56dd7ab950f8ff1dc86b13bc9d}\label{main_8cpp_abfe8fe56dd7ab950f8ff1dc86b13bc9d} 
+Digital\+In {\bfseries encoder\+Right} (D1)
+\begin{DoxyCompactList}\small\item\em Encoder de la rueda derecha. \end{DoxyCompactList}\item 
+Digital\+Out \mbox{\hyperlink{main_8cpp_a840d3846910eee5c8c88f1ffb0782843}{motor\+Left}} (D2)
+\begin{DoxyCompactList}\small\item\em Salidas digitales para control de motores. \end{DoxyCompactList}\item 
+\Hypertarget{main_8cpp_a9e2c6c5e35f01cc8e94f961f850d9355}\label{main_8cpp_a9e2c6c5e35f01cc8e94f961f850d9355} 
+Digital\+Out {\bfseries motor\+Right} (D3)
+\begin{DoxyCompactList}\small\item\em Control del motor derecho. \end{DoxyCompactList}\item 
+Unbuffered\+Serial \mbox{\hyperlink{main_8cpp_ad49ff21a38bf59699b141283d67444d2}{uart\+Usb}} (USBTX, USBRX, 115200)
+\begin{DoxyCompactList}\small\item\em Comunicación serie con la PC. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a5225cb66d91a0766757acd370b60c6f7}{inputs\+Init}} ()
+\begin{DoxyCompactList}\small\item\em Inicialización de entradas digitales. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_ad612e2eed79b422051ceaa16df38c183}{outputs\+Init}} ()
+\begin{DoxyCompactList}\small\item\em Inicialización de salidas digitales. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a0ab57512733269580d0f138ffb227acc}{check\+Sensors}} ()
+\begin{DoxyCompactList}\small\item\em Verifica sensores y botón de emergencia. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a5452242a13043c5415efbbca818fa1b5}{manual\+Mode}} ()
+\begin{DoxyCompactList}\small\item\em Modo de operación manual. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a6dabb1eb070d4c8cffd84a0ba8097fc9}{automatic\+Mode}} ()
+\begin{DoxyCompactList}\small\item\em Modo de operación automática. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a540d016d47be7514b09395a7b70b6ea1}{check\+Mode}} ()
+\begin{DoxyCompactList}\small\item\em Cambia entre modo manual y automático. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_afd851305cd92310c8b2799c1c5d5c129}{compute\+Wheel\+Speeds}} (float \mbox{\hyperlink{main_8cpp_a48d9522e58fa05906c6dba23e5745a72}{v}}, float \mbox{\hyperlink{main_8cpp_a56eca241e2896b9f57a79589e76fd24b}{w}}, float \&v\+\_\+L, float \&v\+\_\+R)
+\begin{DoxyCompactList}\small\item\em Calcula velocidades de las ruedas a partir de v y w. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a0be72733352ddc0e09b4ce86c3c8e870}{set\+Motor\+Speeds}} (float v\+\_\+L, float v\+\_\+R)
+\begin{DoxyCompactList}\small\item\em Aplica velocidades a los motores. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_ace55190c1a614e7c2224ddd6b05a722d}{\+\_\+set\+Motor\+Speeds\+Close\+Loop}} (float v\+\_\+L, float v\+\_\+R)
+\begin{DoxyCompactList}\small\item\em Control de motores en lazo cerrado. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a650781ea495fccb6f664ac3cabe19a6e}{\+\_\+set\+Motor\+Speeds\+Open\+Loop}} (float v\+\_\+L, float v\+\_\+R)
+\begin{DoxyCompactList}\small\item\em Control de motores en lazo abierto. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a71dbe7a175c86756090ae8a8ffd935b1}{motor\+Control\+PWM}} (Digital\+Out \texorpdfstring{$\ast$}{*}motor, float duty, float \texorpdfstring{$\ast$}{*}time\+Elapsed)
+\begin{DoxyCompactList}\small\item\em Control PWM de los motores. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a1cd9c02ae085896800c7704dfa969a24}{available\+Commands}} ()
+\begin{DoxyCompactList}\small\item\em Lista de comandos disponibles para el usuario. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_abe3cadd48fff6e4ace8d1306bbda3d40}{read\+Encoders}} ()
+\begin{DoxyCompactList}\small\item\em Lee los encoders y calcula velocidades. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{main_8cpp_aa79a08e631aff494c952637eeb40ce09}{\+\_\+min}} (float a, float b)
+\begin{DoxyCompactList}\small\item\em Calcula el mínimo entre dos valores. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{main_8cpp_a97f0625d90c3934f680b377575482d95}{\+\_\+max}} (float a, float b)
+\begin{DoxyCompactList}\small\item\em Calcula el máximo entre dos valores. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a40634c42d0e0e3b0d584421333187360}{\+\_\+print\+Uart}} (const char \texorpdfstring{$\ast$}{*}msg)
+\begin{DoxyCompactList}\small\item\em Envia mensajes por UART. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em Función principal del programa. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{main_8cpp_a1ea5d0cb93f22f7d0fdf804bd68c3326}{mode}} = \mbox{\hyperlink{main_8cpp_a0f4637d3c9a2605683f0f6c1ba0b267e}{MANUAL\+\_\+\+MODE}}
+\begin{DoxyCompactList}\small\item\em Modo de operación del robot. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{main_8cpp_ad9917a007b54d44589414fbda45dda17}{emergency\+Stop}} = false
+\begin{DoxyCompactList}\small\item\em Estado de emergencia (true si activado). \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{main_8cpp_a48d9522e58fa05906c6dba23e5745a72}{v}} = 0.\+0f
+\begin{DoxyCompactList}\small\item\em Velocidad lineal del robot (m/s). \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{main_8cpp_a56eca241e2896b9f57a79589e76fd24b}{w}} = 0.\+0f
+\begin{DoxyCompactList}\small\item\em Velocidad angular del robot (rad/s). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{main_8cpp_a2a0a9bd05b74cbffc78b8e534459c1be}{close\+Loop}} = false
+\begin{DoxyCompactList}\small\item\em Activa o desactiva el control a lazo cerrado. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_p_i_d}{PID}} \mbox{\hyperlink{main_8cpp_ae40d9feecca6a0fec2e3c6a613923e8a}{pid\+Controller}} (1.\+0, 0.\+1, 0.\+01, \mbox{\hyperlink{main_8cpp_a83f28fd780254a0181b3d40cdaa96b67}{PWM\+\_\+\+STEP}})
+\begin{DoxyCompactList}\small\item\em Instancia del controlador \doxylink{class_p_i_d}{PID} para los motores. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{main_8cpp_ad434dbd85f35508661cfe0176eaa624d}{left\+Speed\+Measured}} = 0.\+0f
+\begin{DoxyCompactList}\small\item\em Velocidad estimada de la rueda izquierda. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{main_8cpp_afc3c0c0378564fd8884e224ed5d8c383}{right\+Speed\+Measured}} = 0.\+0f
+\begin{DoxyCompactList}\small\item\em Velocidad estimada de la rueda derecha. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{main_8cpp_a4640f12f8cf975e6e306d56abd3ddb8b}{left\+Duty\+Cycle\+PID}} = 0.\+0f
+\begin{DoxyCompactList}\small\item\em Duty cycle rueda izquierda calculada por \doxylink{class_p_i_d}{PID} (accion de control) \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{main_8cpp_a1ddb4d99b90950bdd62010971156870c}{right\+Duty\+Cycle\+PID}} = 0.\+0f
+\begin{DoxyCompactList}\small\item\em Duty cycle rueda derecha calculada por \doxylink{class_p_i_d}{PID} (accion de control) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8cpp_a3292e32026e31808b32575d8774a5052}{accumulated\+Time\+PID}} = 0
+\begin{DoxyCompactList}\small\item\em Contador de tiempo \doxylink{class_p_i_d}{PID}. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8cpp_ac8dba76ebf30b0271c8252f2bb1c050e}{accumulated\+Time\+Encoder}} = 0
+\begin{DoxyCompactList}\small\item\em Contador de tiempo Encode. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8cpp_a5a4c9f1d11ed1bf69856b76b29ef3ca7}{accumulated\+Time\+Motor}} = 0
+\begin{DoxyCompactList}\small\item\em Contador de tiempo Motor. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8cpp_aa31cb184a50cf0dab15f9cd09eaa4b53}{accumulated\+Time\+Stop}} = 0
+\begin{DoxyCompactList}\small\item\em Contador de tiempo Botton\+Stop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Código principal del robot móvil diferencial. 
+
+\begin{DoxyAuthor}{Author}
+Brian Fuentes (\href{mailto:bfuentes@fi.uba.ar}{\texttt{ bfuentes@fi.\+uba.\+ar}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2025-\/04-\/03
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2025
+\end{DoxyCopyright}
+\begin{DoxyNote}{Note}
+El robot solo manejará velocidades positivas en esta etapa. 
+
+No se implementan modularizaciones ni interrupciones en esta versión inicial. \href{https://ria.utn.edu.ar/server/api/core/bitstreams/1bbbbe5b-096e-4df5-8a84-a869f0a48766/content}{\texttt{ https\+://ria.\+utn.\+edu.\+ar/server/api/core/bitstreams/1bbbbe5b-\/096e-\/4df5-\/8a84-\/a869f0a48766/content}} 
+\end{DoxyNote}
+
+
+Definition in file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{main_8cpp_a1f0a4d9ea240cd6d883e41a8a99039af}\index{main.cpp@{main.cpp}!AUTOMATIC\_MODE@{AUTOMATIC\_MODE}}
+\index{AUTOMATIC\_MODE@{AUTOMATIC\_MODE}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{AUTOMATIC\_MODE}{AUTOMATIC\_MODE}}
+{\footnotesize\ttfamily \label{main_8cpp_a1f0a4d9ea240cd6d883e41a8a99039af} 
+\#define AUTOMATIC\+\_\+\+MODE~1}
+
+
+
+Modo automático. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00025}{25}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a0fd8ccea4c0d3fee95da045da247aed6}\index{main.cpp@{main.cpp}!DUTY\_MAX@{DUTY\_MAX}}
+\index{DUTY\_MAX@{DUTY\_MAX}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{DUTY\_MAX}{DUTY\_MAX}}
+{\footnotesize\ttfamily \label{main_8cpp_a0fd8ccea4c0d3fee95da045da247aed6} 
+\#define DUTY\+\_\+\+MAX~1.\+0f}
+
+
+
+Ciclo de trabajo máximo. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00046}{46}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a56a1867ee143bfe79f9f68051d5e6f91}\index{main.cpp@{main.cpp}!DUTY\_MIN@{DUTY\_MIN}}
+\index{DUTY\_MIN@{DUTY\_MIN}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{DUTY\_MIN}{DUTY\_MIN}}
+{\footnotesize\ttfamily \label{main_8cpp_a56a1867ee143bfe79f9f68051d5e6f91} 
+\#define DUTY\+\_\+\+MIN~0.\+0f}
+
+
+
+Límites de ciclo de trabajo del PWM. 
+
+Ciclo de trabajo mínimo 
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00045}{45}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a0f4637d3c9a2605683f0f6c1ba0b267e}\index{main.cpp@{main.cpp}!MANUAL\_MODE@{MANUAL\_MODE}}
+\index{MANUAL\_MODE@{MANUAL\_MODE}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{MANUAL\_MODE}{MANUAL\_MODE}}
+{\footnotesize\ttfamily \label{main_8cpp_a0f4637d3c9a2605683f0f6c1ba0b267e} 
+\#define MANUAL\+\_\+\+MODE~0}
+
+
+
+Definición de los modos de operación. 
+
+Modo manual 
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_aacaca0988244bd3a888ca5befa89f44b}\index{main.cpp@{main.cpp}!PWM\_PERIOD@{PWM\_PERIOD}}
+\index{PWM\_PERIOD@{PWM\_PERIOD}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{PWM\_PERIOD}{PWM\_PERIOD}}
+{\footnotesize\ttfamily \label{main_8cpp_aacaca0988244bd3a888ca5befa89f44b} 
+\#define PWM\+\_\+\+PERIOD~0.\+1}
+
+
+
+Período total del "{}\+PWM"{} en segundos. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00041}{41}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a83f28fd780254a0181b3d40cdaa96b67}\index{main.cpp@{main.cpp}!PWM\_STEP@{PWM\_STEP}}
+\index{PWM\_STEP@{PWM\_STEP}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{PWM\_STEP}{PWM\_STEP}}
+{\footnotesize\ttfamily \label{main_8cpp_a83f28fd780254a0181b3d40cdaa96b67} 
+\#define PWM\+\_\+\+STEP~0.\+01}
+
+
+
+Paso de tiempo en cada iteración. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00042}{42}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_af1ebcdfdb36b835d08d6295b5990065d}\index{main.cpp@{main.cpp}!TIME\_INCREMENT\_MS@{TIME\_INCREMENT\_MS}}
+\index{TIME\_INCREMENT\_MS@{TIME\_INCREMENT\_MS}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{TIME\_INCREMENT\_MS}{TIME\_INCREMENT\_MS}}
+{\footnotesize\ttfamily \label{main_8cpp_af1ebcdfdb36b835d08d6295b5990065d} 
+\#define TIME\+\_\+\+INCREMENT\+\_\+\+MS~10}
+
+
+
+Configuración del control de tiempo. 
+
+Incremento de tiempo en milisegundos 
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_abdf34f743a79df4a5405494a5a5ac545}\index{main.cpp@{main.cpp}!V\_MAX@{V\_MAX}}
+\index{V\_MAX@{V\_MAX}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{V\_MAX}{V\_MAX}}
+{\footnotesize\ttfamily \label{main_8cpp_abdf34f743a79df4a5405494a5a5ac545} 
+\#define V\+\_\+\+MAX~1.\+0f}
+
+
+
+Límites y pasos de velocidad. 
+
+Velocidad máxima lineal (m/s) 
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_ad4ba3ca39f09ceaf48279c5c37a6a86b}\index{main.cpp@{main.cpp}!V\_MIN@{V\_MIN}}
+\index{V\_MIN@{V\_MIN}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{V\_MIN}{V\_MIN}}
+{\footnotesize\ttfamily \label{main_8cpp_ad4ba3ca39f09ceaf48279c5c37a6a86b} 
+\#define V\+\_\+\+MIN~0.\+0f}
+
+
+
+Velocidad mínima lineal (m/s) 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a2b0b6e6ba96d86a80185af3440a3d2ed}\index{main.cpp@{main.cpp}!V\_STEP@{V\_STEP}}
+\index{V\_STEP@{V\_STEP}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{V\_STEP}{V\_STEP}}
+{\footnotesize\ttfamily \label{main_8cpp_a2b0b6e6ba96d86a80185af3440a3d2ed} 
+\#define V\+\_\+\+STEP~0.\+1f}
+
+
+
+Incremento de velocidad lineal (m/s) 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00032}{32}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a68c709cd29517003a9730f640e9fc39a}\index{main.cpp@{main.cpp}!W\_MAX@{W\_MAX}}
+\index{W\_MAX@{W\_MAX}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{W\_MAX}{W\_MAX}}
+{\footnotesize\ttfamily \label{main_8cpp_a68c709cd29517003a9730f640e9fc39a} 
+\#define W\+\_\+\+MAX~1.\+0f}
+
+
+
+Velocidad máxima angular (rad/s) 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00029}{29}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a54f2a1c630a65e44e81b95a44f3ab42a}\index{main.cpp@{main.cpp}!W\_MIN@{W\_MIN}}
+\index{W\_MIN@{W\_MIN}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{W\_MIN}{W\_MIN}}
+{\footnotesize\ttfamily \label{main_8cpp_a54f2a1c630a65e44e81b95a44f3ab42a} 
+\#define W\+\_\+\+MIN~0.\+0f}
+
+
+
+Velocidad mínima angular (rad/s) 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_aeaf317694069a27cbace873571f9d626}\index{main.cpp@{main.cpp}!W\_STEP@{W\_STEP}}
+\index{W\_STEP@{W\_STEP}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{W\_STEP}{W\_STEP}}
+{\footnotesize\ttfamily \label{main_8cpp_aeaf317694069a27cbace873571f9d626} 
+\#define W\+\_\+\+STEP~0.\+1f}
+
+
+
+Incremento de velocidad angular (rad/s) 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00033}{33}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a5419e057d3cc43cca2f87bff5b09cb47}\index{main.cpp@{main.cpp}!WHEEL\_DIAMETER@{WHEEL\_DIAMETER}}
+\index{WHEEL\_DIAMETER@{WHEEL\_DIAMETER}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{WHEEL\_DIAMETER}{WHEEL\_DIAMETER}}
+{\footnotesize\ttfamily \label{main_8cpp_a5419e057d3cc43cca2f87bff5b09cb47} 
+\#define WHEEL\+\_\+\+DIAMETER~0.\+069f}
+
+
+
+Diámetro de la rueda (m) 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00037}{37}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_aeec35d5fa40cda2b874fd262a1268b5e}\index{main.cpp@{main.cpp}!WHEEL\_DISTANCE@{WHEEL\_DISTANCE}}
+\index{WHEEL\_DISTANCE@{WHEEL\_DISTANCE}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{WHEEL\_DISTANCE}{WHEEL\_DISTANCE}}
+{\footnotesize\ttfamily \label{main_8cpp_aeec35d5fa40cda2b874fd262a1268b5e} 
+\#define WHEEL\+\_\+\+DISTANCE~0.\+07f}
+
+
+
+Parámetros físicos del robot. 
+
+Distancia entre ruedas (m) 
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00036}{36}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8cpp_a97f0625d90c3934f680b377575482d95}\index{main.cpp@{main.cpp}!\_max@{\_max}}
+\index{\_max@{\_max}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{\_max()}{\_max()}}
+{\footnotesize\ttfamily \label{main_8cpp_a97f0625d90c3934f680b377575482d95} 
+float \+\_\+max (\begin{DoxyParamCaption}\item[{float}]{a}{, }\item[{float}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Calcula el máximo entre dos valores. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00515}{515}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a97f0625d90c3934f680b377575482d95_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_aa79a08e631aff494c952637eeb40ce09}\index{main.cpp@{main.cpp}!\_min@{\_min}}
+\index{\_min@{\_min}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{\_min()}{\_min()}}
+{\footnotesize\ttfamily \label{main_8cpp_aa79a08e631aff494c952637eeb40ce09} 
+float \+\_\+min (\begin{DoxyParamCaption}\item[{float}]{a}{, }\item[{float}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Calcula el mínimo entre dos valores. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00510}{510}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_aa79a08e631aff494c952637eeb40ce09_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a40634c42d0e0e3b0d584421333187360}\index{main.cpp@{main.cpp}!\_printUart@{\_printUart}}
+\index{\_printUart@{\_printUart}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{\_printUart()}{\_printUart()}}
+{\footnotesize\ttfamily \label{main_8cpp_a40634c42d0e0e3b0d584421333187360} 
+void \+\_\+print\+Uart (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{msg}{}\end{DoxyParamCaption})}
+
+
+
+Envia mensajes por UART. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00506}{506}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=224pt]{main_8cpp_a40634c42d0e0e3b0d584421333187360_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a40634c42d0e0e3b0d584421333187360_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_ace55190c1a614e7c2224ddd6b05a722d}\index{main.cpp@{main.cpp}!\_setMotorSpeedsCloseLoop@{\_setMotorSpeedsCloseLoop}}
+\index{\_setMotorSpeedsCloseLoop@{\_setMotorSpeedsCloseLoop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{\_setMotorSpeedsCloseLoop()}{\_setMotorSpeedsCloseLoop()}}
+{\footnotesize\ttfamily \label{main_8cpp_ace55190c1a614e7c2224ddd6b05a722d} 
+void \+\_\+set\+Motor\+Speeds\+Close\+Loop (\begin{DoxyParamCaption}\item[{float}]{v\+\_\+L}{, }\item[{float}]{v\+\_\+R}{}\end{DoxyParamCaption})}
+
+
+
+Control de motores en lazo cerrado. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00403}{403}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_ace55190c1a614e7c2224ddd6b05a722d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_ace55190c1a614e7c2224ddd6b05a722d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a650781ea495fccb6f664ac3cabe19a6e}\index{main.cpp@{main.cpp}!\_setMotorSpeedsOpenLoop@{\_setMotorSpeedsOpenLoop}}
+\index{\_setMotorSpeedsOpenLoop@{\_setMotorSpeedsOpenLoop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{\_setMotorSpeedsOpenLoop()}{\_setMotorSpeedsOpenLoop()}}
+{\footnotesize\ttfamily \label{main_8cpp_a650781ea495fccb6f664ac3cabe19a6e} 
+void \+\_\+set\+Motor\+Speeds\+Open\+Loop (\begin{DoxyParamCaption}\item[{float}]{v\+\_\+L}{, }\item[{float}]{v\+\_\+R}{}\end{DoxyParamCaption})}
+
+
+
+Control de motores en lazo abierto. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00382}{382}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a650781ea495fccb6f664ac3cabe19a6e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a650781ea495fccb6f664ac3cabe19a6e_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a6dabb1eb070d4c8cffd84a0ba8097fc9}\index{main.cpp@{main.cpp}!automaticMode@{automaticMode}}
+\index{automaticMode@{automaticMode}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{automaticMode()}{automaticMode()}}
+{\footnotesize\ttfamily \label{main_8cpp_a6dabb1eb070d4c8cffd84a0ba8097fc9} 
+void automatic\+Mode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Modo de operación automática. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00337}{337}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a6dabb1eb070d4c8cffd84a0ba8097fc9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{main_8cpp_a6dabb1eb070d4c8cffd84a0ba8097fc9_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a1cd9c02ae085896800c7704dfa969a24}\index{main.cpp@{main.cpp}!availableCommands@{availableCommands}}
+\index{availableCommands@{availableCommands}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{availableCommands()}{availableCommands()}}
+{\footnotesize\ttfamily \label{main_8cpp_a1cd9c02ae085896800c7704dfa969a24} 
+void available\+Commands (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Lista de comandos disponibles para el usuario. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00489}{489}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a1cd9c02ae085896800c7704dfa969a24_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a1cd9c02ae085896800c7704dfa969a24_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_abc6326890e26f7d2868d215f4fade685}\index{main.cpp@{main.cpp}!buttonStop@{buttonStop}}
+\index{buttonStop@{buttonStop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{buttonStop()}{buttonStop()}}
+{\footnotesize\ttfamily \label{main_8cpp_abc6326890e26f7d2868d215f4fade685} 
+Digital\+In button\+Stop (\begin{DoxyParamCaption}\item[{BUTTON1}]{}{}\end{DoxyParamCaption})}
+
+
+
+Entradas digitales para sensores y botones. 
+
+Botón de parada de emergencia. Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=331pt]{main_8cpp_abc6326890e26f7d2868d215f4fade685_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a540d016d47be7514b09395a7b70b6ea1}\index{main.cpp@{main.cpp}!checkMode@{checkMode}}
+\index{checkMode@{checkMode}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{checkMode()}{checkMode()}}
+{\footnotesize\ttfamily \label{main_8cpp_a540d016d47be7514b09395a7b70b6ea1} 
+void check\+Mode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Cambia entre modo manual y automático. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00258}{258}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{main_8cpp_a540d016d47be7514b09395a7b70b6ea1_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a0ab57512733269580d0f138ffb227acc}\index{main.cpp@{main.cpp}!checkSensors@{checkSensors}}
+\index{checkSensors@{checkSensors}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{checkSensors()}{checkSensors()}}
+{\footnotesize\ttfamily \label{main_8cpp_a0ab57512733269580d0f138ffb227acc} 
+void check\+Sensors (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Verifica sensores y botón de emergencia. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00278}{278}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{main_8cpp_a0ab57512733269580d0f138ffb227acc_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=231pt]{main_8cpp_a0ab57512733269580d0f138ffb227acc_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_afd851305cd92310c8b2799c1c5d5c129}\index{main.cpp@{main.cpp}!computeWheelSpeeds@{computeWheelSpeeds}}
+\index{computeWheelSpeeds@{computeWheelSpeeds}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{computeWheelSpeeds()}{computeWheelSpeeds()}}
+{\footnotesize\ttfamily \label{main_8cpp_afd851305cd92310c8b2799c1c5d5c129} 
+void compute\+Wheel\+Speeds (\begin{DoxyParamCaption}\item[{float}]{v}{, }\item[{float}]{w}{, }\item[{float \&}]{v\+\_\+L}{, }\item[{float \&}]{v\+\_\+R}{}\end{DoxyParamCaption})}
+
+
+
+Calcula velocidades de las ruedas a partir de v y w. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00350}{350}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_afd851305cd92310c8b2799c1c5d5c129_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a5225cb66d91a0766757acd370b60c6f7}\index{main.cpp@{main.cpp}!inputsInit@{inputsInit}}
+\index{inputsInit@{inputsInit}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{inputsInit()}{inputsInit()}}
+{\footnotesize\ttfamily \label{main_8cpp_a5225cb66d91a0766757acd370b60c6f7} 
+void inputs\+Init (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Inicialización de entradas digitales. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00245}{245}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=244pt]{main_8cpp_a5225cb66d91a0766757acd370b60c6f7_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{main_8cpp_a5225cb66d91a0766757acd370b60c6f7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+int main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Función principal del programa. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00218}{218}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a5452242a13043c5415efbbca818fa1b5}\index{main.cpp@{main.cpp}!manualMode@{manualMode}}
+\index{manualMode@{manualMode}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{manualMode()}{manualMode()}}
+{\footnotesize\ttfamily \label{main_8cpp_a5452242a13043c5415efbbca818fa1b5} 
+void manual\+Mode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Modo de operación manual. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00290}{290}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a5452242a13043c5415efbbca818fa1b5_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{main_8cpp_a5452242a13043c5415efbbca818fa1b5_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a71dbe7a175c86756090ae8a8ffd935b1}\index{main.cpp@{main.cpp}!motorControlPWM@{motorControlPWM}}
+\index{motorControlPWM@{motorControlPWM}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{motorControlPWM()}{motorControlPWM()}}
+{\footnotesize\ttfamily \label{main_8cpp_a71dbe7a175c86756090ae8a8ffd935b1} 
+void motor\+Control\+PWM (\begin{DoxyParamCaption}\item[{Digital\+Out \texorpdfstring{$\ast$}{*}}]{motor}{, }\item[{float}]{duty}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{time\+Elapsed}{}\end{DoxyParamCaption})}
+
+
+
+Control PWM de los motores. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00429}{429}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{main_8cpp_a71dbe7a175c86756090ae8a8ffd935b1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a71dbe7a175c86756090ae8a8ffd935b1_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a840d3846910eee5c8c88f1ffb0782843}\index{main.cpp@{main.cpp}!motorLeft@{motorLeft}}
+\index{motorLeft@{motorLeft}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{motorLeft()}{motorLeft()}}
+{\footnotesize\ttfamily \label{main_8cpp_a840d3846910eee5c8c88f1ffb0782843} 
+Digital\+Out motor\+Left (\begin{DoxyParamCaption}\item[{D2}]{}{}\end{DoxyParamCaption})}
+
+
+
+Salidas digitales para control de motores. 
+
+Control del motor izquierdo. Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a840d3846910eee5c8c88f1ffb0782843_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_ad612e2eed79b422051ceaa16df38c183}\index{main.cpp@{main.cpp}!outputsInit@{outputsInit}}
+\index{outputsInit@{outputsInit}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{outputsInit()}{outputsInit()}}
+{\footnotesize\ttfamily \label{main_8cpp_ad612e2eed79b422051ceaa16df38c183} 
+void outputs\+Init (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Inicialización de salidas digitales. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00252}{252}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{main_8cpp_ad612e2eed79b422051ceaa16df38c183_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{main_8cpp_ad612e2eed79b422051ceaa16df38c183_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_abe3cadd48fff6e4ace8d1306bbda3d40}\index{main.cpp@{main.cpp}!readEncoders@{readEncoders}}
+\index{readEncoders@{readEncoders}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{readEncoders()}{readEncoders()}}
+{\footnotesize\ttfamily \label{main_8cpp_abe3cadd48fff6e4ace8d1306bbda3d40} 
+void read\+Encoders (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Lee los encoders y calcula velocidades. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00454}{454}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{main_8cpp_abe3cadd48fff6e4ace8d1306bbda3d40_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_abe3cadd48fff6e4ace8d1306bbda3d40_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a0be72733352ddc0e09b4ce86c3c8e870}\index{main.cpp@{main.cpp}!setMotorSpeeds@{setMotorSpeeds}}
+\index{setMotorSpeeds@{setMotorSpeeds}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{setMotorSpeeds()}{setMotorSpeeds()}}
+{\footnotesize\ttfamily \label{main_8cpp_a0be72733352ddc0e09b4ce86c3c8e870} 
+void set\+Motor\+Speeds (\begin{DoxyParamCaption}\item[{float}]{v\+\_\+L}{, }\item[{float}]{v\+\_\+R}{}\end{DoxyParamCaption})}
+
+
+
+Aplica velocidades a los motores. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00374}{374}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a0be72733352ddc0e09b4ce86c3c8e870_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a0be72733352ddc0e09b4ce86c3c8e870_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_ad49ff21a38bf59699b141283d67444d2}\index{main.cpp@{main.cpp}!uartUsb@{uartUsb}}
+\index{uartUsb@{uartUsb}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{uartUsb()}{uartUsb()}}
+{\footnotesize\ttfamily \label{main_8cpp_ad49ff21a38bf59699b141283d67444d2} 
+Unbuffered\+Serial uart\+Usb (\begin{DoxyParamCaption}\item[{USBTX}]{}{, }\item[{USBRX}]{}{, }\item[{115200}]{}{}\end{DoxyParamCaption})}
+
+
+
+Comunicación serie con la PC. 
+
+UART para comunicación USB. Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_ad49ff21a38bf59699b141283d67444d2_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8cpp_ac8dba76ebf30b0271c8252f2bb1c050e}\index{main.cpp@{main.cpp}!accumulatedTimeEncoder@{accumulatedTimeEncoder}}
+\index{accumulatedTimeEncoder@{accumulatedTimeEncoder}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{accumulatedTimeEncoder}{accumulatedTimeEncoder}}
+{\footnotesize\ttfamily \label{main_8cpp_ac8dba76ebf30b0271c8252f2bb1c050e} 
+int accumulated\+Time\+Encoder = 0}
+
+
+
+Contador de tiempo Encode. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00155}{155}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a5a4c9f1d11ed1bf69856b76b29ef3ca7}\index{main.cpp@{main.cpp}!accumulatedTimeMotor@{accumulatedTimeMotor}}
+\index{accumulatedTimeMotor@{accumulatedTimeMotor}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{accumulatedTimeMotor}{accumulatedTimeMotor}}
+{\footnotesize\ttfamily \label{main_8cpp_a5a4c9f1d11ed1bf69856b76b29ef3ca7} 
+int accumulated\+Time\+Motor = 0}
+
+
+
+Contador de tiempo Motor. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00156}{156}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a3292e32026e31808b32575d8774a5052}\index{main.cpp@{main.cpp}!accumulatedTimePID@{accumulatedTimePID}}
+\index{accumulatedTimePID@{accumulatedTimePID}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{accumulatedTimePID}{accumulatedTimePID}}
+{\footnotesize\ttfamily \label{main_8cpp_a3292e32026e31808b32575d8774a5052} 
+int accumulated\+Time\+PID = 0}
+
+
+
+Contador de tiempo \doxylink{class_p_i_d}{PID}. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00154}{154}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_aa31cb184a50cf0dab15f9cd09eaa4b53}\index{main.cpp@{main.cpp}!accumulatedTimeStop@{accumulatedTimeStop}}
+\index{accumulatedTimeStop@{accumulatedTimeStop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{accumulatedTimeStop}{accumulatedTimeStop}}
+{\footnotesize\ttfamily \label{main_8cpp_aa31cb184a50cf0dab15f9cd09eaa4b53} 
+int accumulated\+Time\+Stop = 0}
+
+
+
+Contador de tiempo Botton\+Stop. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00157}{157}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a2a0a9bd05b74cbffc78b8e534459c1be}\index{main.cpp@{main.cpp}!closeLoop@{closeLoop}}
+\index{closeLoop@{closeLoop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{closeLoop}{closeLoop}}
+{\footnotesize\ttfamily \label{main_8cpp_a2a0a9bd05b74cbffc78b8e534459c1be} 
+bool close\+Loop = false}
+
+
+
+Activa o desactiva el control a lazo cerrado. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00142}{142}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_ad9917a007b54d44589414fbda45dda17}\index{main.cpp@{main.cpp}!emergencyStop@{emergencyStop}}
+\index{emergencyStop@{emergencyStop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{emergencyStop}{emergencyStop}}
+{\footnotesize\ttfamily \label{main_8cpp_ad9917a007b54d44589414fbda45dda17} 
+bool emergency\+Stop = false}
+
+
+
+Estado de emergencia (true si activado). 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00137}{137}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a4640f12f8cf975e6e306d56abd3ddb8b}\index{main.cpp@{main.cpp}!leftDutyCyclePID@{leftDutyCyclePID}}
+\index{leftDutyCyclePID@{leftDutyCyclePID}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{leftDutyCyclePID}{leftDutyCyclePID}}
+{\footnotesize\ttfamily \label{main_8cpp_a4640f12f8cf975e6e306d56abd3ddb8b} 
+float left\+Duty\+Cycle\+PID = 0.\+0f}
+
+
+
+Duty cycle rueda izquierda calculada por \doxylink{class_p_i_d}{PID} (accion de control) 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00151}{151}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_ad434dbd85f35508661cfe0176eaa624d}\index{main.cpp@{main.cpp}!leftSpeedMeasured@{leftSpeedMeasured}}
+\index{leftSpeedMeasured@{leftSpeedMeasured}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{leftSpeedMeasured}{leftSpeedMeasured}}
+{\footnotesize\ttfamily \label{main_8cpp_ad434dbd85f35508661cfe0176eaa624d} 
+float left\+Speed\+Measured = 0.\+0f}
+
+
+
+Velocidad estimada de la rueda izquierda. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00149}{149}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a1ea5d0cb93f22f7d0fdf804bd68c3326}\index{main.cpp@{main.cpp}!mode@{mode}}
+\index{mode@{mode}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{mode}{mode}}
+{\footnotesize\ttfamily \label{main_8cpp_a1ea5d0cb93f22f7d0fdf804bd68c3326} 
+int mode = \mbox{\hyperlink{main_8cpp_a0f4637d3c9a2605683f0f6c1ba0b267e}{MANUAL\+\_\+\+MODE}}}
+
+
+
+Modo de operación del robot. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00136}{136}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_ae40d9feecca6a0fec2e3c6a613923e8a}\index{main.cpp@{main.cpp}!pidController@{pidController}}
+\index{pidController@{pidController}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{pidController}{pidController}}
+{\footnotesize\ttfamily \label{main_8cpp_ae40d9feecca6a0fec2e3c6a613923e8a} 
+\mbox{\hyperlink{class_p_i_d}{PID}} pid\+Controller(1.\+0, 0.\+1, 0.\+01, \mbox{\hyperlink{main_8cpp_a83f28fd780254a0181b3d40cdaa96b67}{PWM\+\_\+\+STEP}}) (\begin{DoxyParamCaption}\item[{1.}]{0}{, }\item[{0.}]{1}{, }\item[{0.}]{01}{, }\item[{\mbox{\hyperlink{main_8cpp_a83f28fd780254a0181b3d40cdaa96b67}{PWM\+\_\+\+STEP}}}]{}{}\end{DoxyParamCaption})}
+
+
+
+Instancia del controlador \doxylink{class_p_i_d}{PID} para los motores. 
+
+\begin{DoxyNote}{Note}
+Los valores de Kp, Ki y Kd pueden ajustarse para mejorar la respuesta. 
+\end{DoxyNote}
+\Hypertarget{main_8cpp_a1ddb4d99b90950bdd62010971156870c}\index{main.cpp@{main.cpp}!rightDutyCyclePID@{rightDutyCyclePID}}
+\index{rightDutyCyclePID@{rightDutyCyclePID}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{rightDutyCyclePID}{rightDutyCyclePID}}
+{\footnotesize\ttfamily \label{main_8cpp_a1ddb4d99b90950bdd62010971156870c} 
+float right\+Duty\+Cycle\+PID = 0.\+0f}
+
+
+
+Duty cycle rueda derecha calculada por \doxylink{class_p_i_d}{PID} (accion de control) 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00152}{152}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_afc3c0c0378564fd8884e224ed5d8c383}\index{main.cpp@{main.cpp}!rightSpeedMeasured@{rightSpeedMeasured}}
+\index{rightSpeedMeasured@{rightSpeedMeasured}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{rightSpeedMeasured}{rightSpeedMeasured}}
+{\footnotesize\ttfamily \label{main_8cpp_afc3c0c0378564fd8884e224ed5d8c383} 
+float right\+Speed\+Measured = 0.\+0f}
+
+
+
+Velocidad estimada de la rueda derecha. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00150}{150}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a48d9522e58fa05906c6dba23e5745a72}\index{main.cpp@{main.cpp}!v@{v}}
+\index{v@{v}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{v}{v}}
+{\footnotesize\ttfamily \label{main_8cpp_a48d9522e58fa05906c6dba23e5745a72} 
+float v = 0.\+0f}
+
+
+
+Velocidad lineal del robot (m/s). 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00138}{138}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{main_8cpp_a56eca241e2896b9f57a79589e76fd24b}\index{main.cpp@{main.cpp}!w@{w}}
+\index{w@{w}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{w}{w}}
+{\footnotesize\ttfamily \label{main_8cpp_a56eca241e2896b9f57a79589e76fd24b} 
+float w = 0.\+0f}
+
+
+
+Velocidad angular del robot (rad/s). 
+
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00139}{139}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
