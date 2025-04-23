@@ -50,6 +50,7 @@ Este código implementa el control de un **robot móvil diferencial**.
 Está diseñado para manejarse en **modo manual o automático**.
 
 Nota: Inicialmente sin interrupciones ni modularización. 
+
 Nota: La estructura se basa en la ejecución secuencial de eventos con tiempos de muestreo fijos.
 
 
@@ -97,10 +98,11 @@ void motorControlPWM(DigitalOut *motor, float duty, float *timeElapsed)
 ---
 
 ## **2.2. Cinemática Diferencial**
-Para calcular las velocidades de las ruedas en función de la velocidad lineal $ V $ y angular $ W $, se usa:
+Para calcular las velocidades de las ruedas en función de la velocidad lineal $V$ y angular $W$, se usa:
 $$
 V_R = V + \frac{R}{2} W
 $$
+
 $$
 V_L = V - \frac{R}{2} W
 $$
@@ -111,9 +113,11 @@ Esto permite transformar \( V, W \) en velocidades de ruedas **izquierda y derec
 
 ## **2.3. Controlador PID**
 Se implementa un **control PID básico** con los términos:
+
 $$
 u = K_p e + K_i \int{e dt} + K_d \frac{de}{dt}
 $$
+
 Donde:
 - $ e $ es el error ($ \text{setpoint} - \text{valor medido} $)
 - **Integral y derivativa** se calculan de forma discreta.
