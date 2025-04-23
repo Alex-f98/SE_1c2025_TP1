@@ -99,6 +99,7 @@ void motorControlPWM(DigitalOut *motor, float duty, float *timeElapsed)
 
 ## **2.2. Cinemática Diferencial**
 Para calcular las velocidades de las ruedas en función de la velocidad lineal $V$ y angular $W$, se usa:
+
 $$
 V_R = V + \frac{R}{2} W
 $$
