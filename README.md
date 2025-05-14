@@ -1,4 +1,4 @@
-# TP1: sistemas embebidos
+# TP2: sistemas embebidos
 
 ## Titulo: Robot móvil tipo diferencial para búsqueda y localización de personas.
 
@@ -29,13 +29,12 @@ Ademas se implementará un boton digital de parada de emergencia.
 
 ## Periféricos a utilizar:
 
-* **BUTTOM_STOP** : Entrada digital, fuerza la detención del robot llevándolo a un estado seguro.
-* **M1** : Salida digital LED1 que emula un motor controlado por PWM.
-* **M2** :  Salida digital LED2 que emula un motor controlado por PWM.
-* **ENCODER_1** : Entrada digital, simula un encoder tomando las pulsaciones del LED1. 
-* **ENCODER_1** : Entrada digital, simula un encoder tomando las pulsaciones del LED2. 
-* **UART**:  Se utiliza para enviar datos de referencia o control al microprocesador.
-
+| Componente       | Tipo             | Función                                     |
+|------------------|------------------|---------------------------------------------|
+| `BUTTON_STOP`    | Entrada digital  | Parada de emergencia                        |
+| `M1` / `M2`      | pwm out          | Controla motor mediante pwm.                |
+| `ENCODER_1/2`    | Entrada digital  | Cuenta ticks de un lm393                    |
+| `UART`           | Comunicación     | Entrada de comandos de velocidad o posición |
 ## Plataforma de desarrollo: NUCLEO-F429ZI
 
 ## Esquematico:
@@ -49,14 +48,15 @@ Ademas se implementará un boton digital de parada de emergencia.
 Este código implementa el control de un **robot móvil diferencial**. 
 Está diseñado para manejarse en **modo manual o automático**.
 
-Nota: Inicialmente sin interrupciones ni modularización. 
+
 Nota: La estructura se basa en la ejecución secuencial de eventos con tiempos de muestreo fijos.
+Nota: Los tiempos fijos se mantenienen ahora dentro de cada modulo.
 
 
 # **1. Estructura General**
 El programa sigue un **bucle principal (`main()`)** donde:
 1. **Inicializa** entradas, salidas y el controlador PID.
-2. **Verifica sensores y botón de emergencia** cada 100 ms.
+2. **Verifica botón de emergencia** mediante interrupcción.
 3. **Maneja el modo de operación**:
    - En **modo manual**, lee comandos UART cada 100 ms para modificar velocidades (limitados).
    - En **modo automático**, de momento genera valores aleatorios de velocidad (limitados).
@@ -69,47 +69,40 @@ El control de tiempo se implementa de manera secuencial mediante **contadores de
 
 # **2. Componentes Clave**
 
-## **2.1. Control del Motor**
-El sistema soporta:
-- **Control en lazo abierto** (`_setMotorSpeedsOpenLoop()`): Convierte la velocidad en un **duty cycle fijo** proporcional a la velocidad deseada.
-- **Control en lazo cerrado** (`_setMotorSpeedsCloseLoop()`): Usa **encoders** y un **PID** para ajustar el duty cycle y corregir errores.
+/robot_firmware/
+├── main.cpp                         # Punto de entrada
+├── CMakeLists.txt                   # Sistema de build de Mbed
+├── config/
+│   ├── robot_config.h               # Parámetros físicos, PID, límites, etc.
+│   └── pinout_default.h             # Asignación de pines por defecto
+├── hardware/
+│   ├── encoder.cpp/.h               # Lectura de encoders
+│   ├── motor_driver.cpp/.h          # Control PWM, on/off de motores
+│   ├── emergency_button.cpp/.h      # Lectura de botón de parada
+│   └── uart_interface.cpp/.h        # Comunicación serie con usuario (no implementado)
+├── control/
+│   ├── pid.cpp/.h                   # Controlador PID genérico
+│   └── motor_control.cpp/.h         # Lazo abierto y cerrado usando PID
+├── motion/
+│   └── kinematics.cpp/.h            # Interfaz base para modelos cinemático
+├── modes/
+│   ├── modes.cpp/.h                 # Modo de operación manual # Modo de operación automática
+│   └── mode_manager.cpp/.h          # Gestión de cambio de modos
+├── utils/
+│   └── logger.cpp/.h                # Debug por UART (implementar base de errores para manejo de errores posteriormente)
+└── docs/
+    └── README.md                    # Documentación del sistema y cómo extenderlo
 
-La función principal para aplicar el control es:
-```cpp
-void setMotorSpeeds(float v_L, float v_R)
-{
-    if (closeLoop == true)
-        _setMotorSpeedsCloseLoop(v_L, v_R);
-    else
-        _setMotorSpeedsOpenLoop(v_L, v_R);
-}
-```
-Esto permite cambiar entre lazo abierto y cerrado **en tiempo de ejecución**.
+## **2.1. Configuraciones**
+- Contiene parametros fisicos y tiempos que se usan en la mayoria de los modulos.
+- Contiene definiciones de pines de entrada y salida asi como los de UART.
 
-### **Control PWM de los motores**
-Los motores se controlan con **PWM por software**:
-```cpp
-void motorControlPWM(DigitalOut *motor, float duty, float *timeElapsed)
-```
-- Se usa **`timeElapsed`** para simular un ciclo PWM con comparación por software.
-- **En futuras versiones**, esta función debe ser reemplazada por un **PWM por hardware**.
+## **2.2. Modulos de Harware**
+- encoder.cpp: implementa toda la logica de un encoder fisico, este encoder esta basado en contar ticks cada cierto tiempo (configurable en robot_cofig.h).
+- motor_driver.cpp: Implementa un motor de continua, convierte velocidades de referencia en duty cycle para un pwm (usa pwmOut).
 
----
-
-## **2.2. Cinemática Diferencial**
-Para calcular las velocidades de las ruedas en función de la velocidad lineal $ V $ y angular $ W $, se usa:
-$$
-V_R = V + \frac{R}{2} W
-$$
-$$
-V_L = V - \frac{R}{2} W
-$$
-
-Esto permite transformar \( V, W \) en velocidades de ruedas **izquierda y derecha**.
-
----
-
-## **2.3. Controlador PID**
+### **2.3. Modulo de control**
+- pid.cpp: Implementa un control PID.
 Se implementa un **control PID básico** con los términos:
 $$
 u = K_p e + K_i \int{e dt} + K_d \frac{de}{dt}
@@ -124,65 +117,88 @@ if (saturationEnabled){
     return max_(min_(outPut, outputMax), outputMin);
 }
 ```
-El PID se ejecuta en **cada ciclo PWM** (cada 10 ms).
 
----
+- motor_control.cpp: Se encarga del control a lazo abierto o cerrado(usando pid) del motor dc, usa el encoder para obtener velocidades observadas.
 
-## **2.4. Comunicación y Control Manual**
+## **2.3. Cinemática Diferencial**
+El modelo cinemático diferencial transforma velocidades lineales y angulares del cuerpo del robot a velocidades de rueda:
+
+$$
+v = \frac{v_R + v_L}{2}, \quad \omega = \frac{v_R - v_L}{L}
+$$
+
+Despejando:
+
+$$
+v_R = v + \frac{L}{2} \omega, \quad v_L = v - \frac{L}{2} \omega
+$$
+
+Para convertir las velocidades lineales a velocidades angulares de rueda (\( \omega_r, \omega_l \)) se divide por el radio \( r \):
+
+$$
+\omega_R = \frac{v_R}{r}, \quad \omega_L = \frac{v_L}{r}
+$$
+
+
+## **2.4. Gestor de modos de operacion**
+
 El robot se puede controlar manualmente vía **UART** con comandos como:
-- `'v'` y `'s'`: Aumentar/disminuir velocidad lineal.
+- `'w'` y `'s'`: Aumentar/disminuir velocidad lineal.
 - `'a'` y `'d'`: Aumentar/disminuir velocidad angular.
 - `'m'`: Cambiar entre **modo manual/automático**.
 - `'c'`: Activar/desactivar **control en lazo cerrado**.
 - `'q'`: Fuerza velocidades a cero **apago el robot**.
 
-Los comandos se procesan en `manualMode()`, ejecutándose **cada 100 ms**.
+Se defines los modos de operacion y las llamadas a otras funciones dentro de modes.cpp, luego se gestionan los modos de operacion a
+traves de mode_manager.cpp.
 
 ---
 
 ## **2.5. Manejo de Sensores y Seguridad**
 - **Botón de parada de emergencia** (`buttonStop`):
-  - Se revisa **cada 100 ms** (`checkSensors()`).
+  - Se revisa **cada 10 ms** (`checkSensors()`), se activa el flag mediante interrupcciones.
   - Si se activa, se detienen los motores suavemente.
 
 - **Encoders** (`encoderLeft` y `encoderRight`):
   - Son entradas digitales para medir velocidades de las ruedas.
   - Se usan en **control en lazo cerrado** (`readEncoders()`).
   - Se acumulan **Ticks cada 10ms** los cuales se usan para estimar la velocidad.
-  - Se calcula la estimacion de velocidad sensada **cada 30 ms**.
+  - Se calcula la estimacion de velocidad sensada **cada 100 ms**.
 
 ---
-# **3. Diagrama simple del codigo**
 
-![DiagramaSimple](DiagramFlujo01.png)
+# **3. Mejoras Futuras**
 
-# **4. Mejoras Futuras**
-
-### ** Migración a Interrupciones**
-- Actualmente, todo se ejecuta en un **bucle secuencial**, lo cual **no es eficiente**.
+### **Migración a Interrupciones**
+- Actualmente, casi todo se ejecuta en un **bucle secuencial**, lo cual **no es eficiente**.
 - Debe implementarse un **scheduler con interrupciones**, por ejemplo:
   - **Timers para muestreo PID y encoders**.
   - **Interrupción por UART para leer comandos**.
 
-### ** Implementación de PWM por Hardware**
-- La modulación PWM actual usa un **ciclo de comparación por software**.
-- Se debe utilizar **PWM nativo** para **mejor precisión y eficiencia**.
 
-### ** Integración de Sensores de Navegación**
+### **Integración de Sensores de Navegación**
 - En **modo automático**, el robot solo usa velocidades aleatorias.
 - Debe integrarse:
   - **Cámara** para localizar personas y de ser posible evitar obstáculos.
   - **Filtro de Kalman** para estimación de posición.
 
+### ** Acttualizacion de hardware **
+- se debe mejorar los sensores de encoder.
+- Mejorar los metodos de validacion de velocidad (optical flow).
+- Identificar la planta del motor DC.
+
 # **Para mejorar**:
 
-**Implementar interrupciones para mejor eficiencia**  
-**Usar PWM por hardware para control de motores**
-**Modularizar codigo y mejorar la mantenibilidad**
+**Implementar interrupciones para mejor eficiencia (encoder?)**  
 **Agregar navegación autónoma basica**
 
 ---
 
+## **Video**
+
+https://www.youtube.com/watch?v=Sc_idwAd8kU
+
+---
 ## **Bibliografia**: 
 
 https://ria.utn.edu.ar/server/api/core/bitstreams/1bbbbe5b-096e-4df5-8a84-a869f0a48766/content
