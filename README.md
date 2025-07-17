@@ -1,4 +1,4 @@
-# TP2: sistemas embebidos
+## TP2: sistemas embebidos
 
 ## Titulo: Robot móvil tipo diferencial para búsqueda y localización de personas.
 
@@ -68,57 +68,107 @@ El control de tiempo se implementa de manera secuencial mediante **contadores de
 ---
 
 # **2. Componentes Clave**
-
+Los header se necuentran en la carpeta **modules/include** y los respectivos archivos de implementacion en **modules/src**.
+```
 /robot_firmware/
-├── main.cpp                         # Punto de entrada
-├── CMakeLists.txt                   # Sistema de build de Mbed
-├── config/
-│   ├── robot_config.h               # Parámetros físicos, PID, límites, etc.
-│   └── pinout_default.h             # Asignación de pines por defecto
-├── hardware/
-│   ├── encoder.cpp/.h               # Lectura de encoders
-│   ├── motor_driver.cpp/.h          # Control PWM, on/off de motores
-│   ├── emergency_button.cpp/.h      # Lectura de botón de parada
-│   └── uart_interface.cpp/.h        # Comunicación serie con usuario (no implementado)
-├── control/
-│   ├── pid.cpp/.h                   # Controlador PID genérico
-│   └── motor_control.cpp/.h         # Lazo abierto y cerrado usando PID
-├── motion/
-│   └── kinematics.cpp/.h            # Interfaz base para modelos cinemático
-├── modes/
-│   ├── modes.cpp/.h                 # Modo de operación manual # Modo de operación automática
-│   └── mode_manager.cpp/.h          # Gestión de cambio de modos
-├── utils/
-│   └── logger.cpp/.h                # Debug por UART (implementar base de errores para manejo de errores posteriormente)
-└── docs/
-    └── README.md                    # Documentación del sistema y cómo extenderlo
+├── main.cpp                       # Punto de entrada principal del firmware
+├── README.md                      # Descripción general del proyecto
+├── modules/
+│   ├── config/                    # Configuraciones generales y pines
+│   │   ├── pin_out_default.h      # Asignación de pines por defecto
+│   │   └── robot_config.h         # Parámetros físicos y constantes del robot
+│   │
+│   ├── include/                   # Encabezados públicos de los módulos
+│   │   ├── control/               # Interfaces de controladores (PID, motor)
+│   │   │   ├── motor_control.h    # Controlador de motores (tiliza PID y encoder)
+│   │   │   ├── pid.h              # Controlador PID
+│   │   │   └── README.md          # Descripción del módulo de control
+│   │   ├── hardware/              # Interfaces de hardware (drivers)
+│   │   │   ├── emergency_button.h
+│   │   │   ├── encoderCounter.h
+│   │   │   ├── encoder.h          # Encoder(No se utiliza en esta versión)
+│   │   │   ├── encoderVelocity.h  # Utiliza encoderCounter para medir velocidades
+│   │   │   ├── motor_driver.h     # traduce velocidades a pwm
+│   │   │   └── README.md          # Descripción del módulo de hardware
+│   │   ├── modes/                 # Modos de operación del sistema
+│   │   │   ├── mode_manager.h     # Gestor de modos
+│   │   │   ├── modes.h            # Definición de modos
+│   │   │   └── README.md          # Descripción del módulo de modos
+│   │   ├── motion/                # Lógica de movimiento y cinemática
+│   │   │   └── kinematics.h       # Cinemática (solo uso la diferencial)
+│   │   ├── robot/                 # Definición y estado general del robot
+│   │   │   └── robot.h            # Contiene el loop principal con la logica
+│   │   └── utils/                 # Funciones auxiliares
+│   │       ├── debug.h
+│   │       └── utils.h
+|   |
+│   └── src/                       # Implementación de los módulos
+│       ├── control/
+│       │   ├── motor_control.cpp
+│       │   └── pid.cpp
+│       ├── hardware/
+│       │   ├── emergency_button.cpp
+│       │   ├── encoderCounter.cpp
+│       │   ├── encoder.cpp
+│       │   ├── encoderVelocity.cpp
+│       │   └── motor_driver.cpp
+│       ├── modes/
+│       │   ├── mode_manager.cpp
+│       │   └── modes.cpp
+│       ├── motion/
+│       │   └── kinematics.cpp
+│       ├── robot/
+│       │   └── robot.cpp
+│       └── utils/
+│           ├── debug.cpp
+│           └── utils.cpp
+
+```
+
 
 ## **2.1. Configuraciones**
 - Contiene parametros fisicos y tiempos que se usan en la mayoria de los modulos.
 - Contiene definiciones de pines de entrada y salida asi como los de UART.
 
 ## **2.2. Modulos de Harware**
-- encoder.cpp: implementa toda la logica de un encoder fisico, este encoder esta basado en contar ticks cada cierto tiempo (configurable en robot_cofig.h).
-- motor_driver.cpp: Implementa un motor de continua, convierte velocidades de referencia en duty cycle para un pwm (usa pwmOut).
+- **emergency_button.cpp**: Implementa toda la logica de un boton de emergencia.
+- **encoderCounter.cpp**: Este encoder esta centrado en contar ticks cada cierto mediante interrupciones.
+- **encoderVelocity.cpp**: Implementa toda la logica de un encoder fisico, usa encoderCounter para medir velocidades cada cierto tiempo (configurable en robot_cofig.h).
+- **encoder.cpp**: Implementa toda la logica de un encoder fisico, este encoder esta basado en contar ticks cada cierto tiempo (configurable en robot_cofig.h).
+- **motor_driver.cpp**: Implementa un motor de continua, convierte velocidades de referencia en duty cycle para un pwm (usa pwmOut).
 
 ### **2.3. Modulo de control**
 - pid.cpp: Implementa un control PID.
 Se implementa un **control PID básico** con los términos:
 $$
-u = K_p e + K_i \int{e dt} + K_d \frac{de}{dt}
+u = u_{Bias} + K_c(e + \frac{1}{T_i}\int{e dt} + T_d \frac{de}{dt})
 $$
 Donde:
 - $ e $ es el error ($ \text{setpoint} - \text{valor medido} $)
 - **Integral y derivativa** se calculan de forma discreta.
 
-Para evitar valores extremos, se usa **saturación de salida**:
-```cpp
-if (saturationEnabled){
-    return max_(min_(outPut, outputMax), outputMin);
-}
-```
+Tambien puede escribirse de la siguiente forma, segun [PID](https://os.mbed.com/cookbook/PID):
 
-- motor_control.cpp: Se encarga del control a lazo abierto o cerrado(usando pid) del motor dc, usa el encoder para obtener velocidades observadas.
+$$
+CO = CO_{bias} + K_c(e(t) + \frac{1}{T_i}\int{e(t) dt} + T_d \frac{Pv}{dt})
+$$
+
+Donde:
+- $ CO $ es la salida del controlador
+- $ CO_{bias} $ es un bias optimo para el controlador
+- $ K_c $ es la ganancia del controlador
+- $ e(t) $ es el error ($ \text{Pv} - \text{valor medido} $)
+- $ T_i $ es el tiempo de integración
+- $ T_d $ es el tiempo de derivación
+- $ Pv $ es la variable del proceso
+- $ dt $ es la tasa de muestreo
+
+mas información en el modulo [control](modules/include/control/README.md).
+
+- **motor_control.cpp**: Se encarga del control a lazo abierto o cerrado(usando pid) del motor dc, usa el encoder para obtener velocidades observadas.
+
+- **encoderVelocity.cpp**: Implementa toda la logica de un encoder fisico, usa encoderCounter para medir velocidades cada cierto tiempo (configurable en [robot_cofig.h](modules/config/robot_config.h)).
+Tambien se puede encontrar mas informaciobn en el modulo [hardware](modules/include/hardware/README.md).
 
 ## **2.3. Cinemática Diferencial**
 El modelo cinemático diferencial transforma velocidades lineales y angulares del cuerpo del robot a velocidades de rueda:
@@ -133,13 +183,13 @@ $$
 v_R = v + \frac{L}{2} \omega, \quad v_L = v - \frac{L}{2} \omega
 $$
 
-Para convertir las velocidades lineales a velocidades angulares de rueda (\( \omega_r, \omega_l \)) se divide por el radio \( r \):
+Para convertir las velocidades lineales a velocidades angulares de rueda ($ \omega_R, \omega_L $) se divide por el radio $ r $:
 
 $$
 \omega_R = \frac{v_R}{r}, \quad \omega_L = \frac{v_L}{r}
 $$
 
-
+Nota: de momento esta es la unica cinemática utilizada.
 ## **2.4. Gestor de modos de operacion**
 
 El robot se puede controlar manualmente vía **UART** con comandos como:
@@ -162,17 +212,55 @@ traves de mode_manager.cpp.
 - **Encoders** (`encoderLeft` y `encoderRight`):
   - Son entradas digitales para medir velocidades de las ruedas.
   - Se usan en **control en lazo cerrado** (`readEncoders()`).
-  - Se acumulan **Ticks cada 10ms** los cuales se usan para estimar la velocidad.
-  - Se calcula la estimacion de velocidad sensada **cada 100 ms**.
+  - Se acumulan **Ticks cada vez que se detecta un flanco de subida** usando interrupciones.
+  - Se calcula la estimacion de velocidad sensada **cada  0.017s**.
 
 ---
 
-# **3. Mejoras Futuras**
+## **2.6. Manager de robot**
+Recibe velocidades de referencia respecto del centro de masa del robot y aplica las velocidades necesarias para los motores, acciona segun su propia maquina de estados.
+Mas informacion en el modulo [modes manager](modules/include/modes/README.md).
+
+
+# **3. Calculo de tiempos**
+
+Se sigue la siguiente regla basica para comenzar:
+
+$$f_{observador} >= f_{control} >= 10 . f_{planta}$$
+
+Donde:
+- $f_{observador}$ es la frecuencia de muestreo del observador(encoder).
+- $f_{control}$ es la frecuencia de muestreo del controlador(pid).
+- $f_{planta}$ es la frecuencia de muestreo de la planta(motores).
+
+Sabemos que los motores trabajan a 5v segun la informacion del mismo tiene velocidad maxima 150 rpm aprox.
+
+entonces $\Delta Ticks = \frac{60 s/min}{TicksPorRev * VelMaxRPM } = \frac{60}{20 * 150} = \frac{1}{50} = 0.02s$
+
+Entonces se elige:
+
+
+$$
+\begin{array}{|c|c|c|c|}
+\hline
+\textbf{Componente} & \textbf{Frecuencia} & \textbf{Período} & \textbf{Constante} \\
+\hline
+\text{Observador} & 50\,\text{Hz} & 20\,\text{ms} & \text{TENCODER\_UPDATE} \\
+\hline
+\text{Controlador} & 40\,\text{Hz} & 25\,\text{ms} & \text{TS} \\
+\hline
+\text{Planta} & 4\,\text{Hz} & 250\,\text{ms} & \text{TMOTOR\_UPDATE} \\
+\hline
+\end{array}
+$$
+
+Se puede encontrar las constantes en el archivo [robot_config.h](modules/config/robot_config.h).
+
+# **4. Mejoras Futuras**
 
 ### **Migración a Interrupciones**
-- Actualmente, casi todo se ejecuta en un **bucle secuencial**, lo cual **no es eficiente**.
+
 - Debe implementarse un **scheduler con interrupciones**, por ejemplo:
-  - **Timers para muestreo PID y encoders**.
   - **Interrupción por UART para leer comandos**.
 
 
@@ -182,21 +270,20 @@ traves de mode_manager.cpp.
   - **Cámara** para localizar personas y de ser posible evitar obstáculos.
   - **Filtro de Kalman** para estimación de posición.
 
-### ** Acttualizacion de hardware **
-- se debe mejorar los sensores de encoder.
+### **Actualizacion de hardware**
 - Mejorar los metodos de validacion de velocidad (optical flow).
 - Identificar la planta del motor DC.
 
 # **Para mejorar**:
-
-**Implementar interrupciones para mejor eficiencia (encoder?)**  
 **Agregar navegación autónoma basica**
 
 ---
 
 ## **Video**
 
-https://www.youtube.com/watch?v=Sc_idwAd8kU
+TP2: https://www.youtube.com/watch?v=Sc_idwAd8kU
+
+TP3: [video demostración TP3](https://www.youtube.com/watch?si=rM97AdbaSwF0Z7xf&v=Ra4TXIUrl3o&feature=youtu.be)
 
 ---
 ## **Bibliografia**: 
